@@ -1,68 +1,80 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
+const int MAX = 100;
+
 struct List {
-    vector<int> arr; // dùng vector để dễ quản lý
+    int arr[MAX];
+    int size;
 
-    // Thêm phần tử vào đầu
-    void insertFirst(int x) {
-        arr.insert(arr.begin(), x);
+    void init() { // O(1)
+        size = 0;
     }
 
-    // Thêm phần tử vào cuối
-    void insertLast(int x) {
-        arr.push_back(x);
+    void push_back(int x) { // O(1)
+        if (size < MAX) arr[size++] = x;
     }
 
-    // Thêm phần tử vào vị trí i
-    void insertAt(int i, int x) {
-        if (i < 0 || i > arr.size()) return;
-        arr.insert(arr.begin() + i, x);
+    void push_front(int x) { // O(n)
+        if (size < MAX) {
+            for (int i = size; i > 0; i--) arr[i] = arr[i - 1];
+            arr[0] = x;
+            size++;
+        }
     }
 
-    // Xóa đầu
-    void deleteFirst() {
-        if (!arr.empty()) arr.erase(arr.begin());
+    void insert(int i, int x) { // O(n)
+        if (i < 0 || i > size || size >= MAX) return;
+        for (int j = size; j > i; j--) arr[j] = arr[j - 1];
+        arr[i] = x;
+        size++;
     }
 
-    // Xóa cuối
-    void deleteLast() {
-        if (!arr.empty()) arr.pop_back();
+    void erase_front() { // O(n)
+        if (size == 0) return;
+        for (int i = 0; i < size - 1; i++) arr[i] = arr[i + 1];
+        size--;
     }
 
-    // Xóa tại vị trí i
-    void deleteAt(int i) {
-        if (i < 0 || i >= arr.size()) return;
-        arr.erase(arr.begin() + i);
+    void erase_back() { // O(1)
+        if (size > 0) size--;
     }
 
-    // Truy cập phần tử i
-    int getElement(int i) {
-        if (i < 0 || i >= arr.size()) return -1;
-        return arr[i];
+    void erase(int i) { // O(n)
+        if (i < 0 || i >= size) return;
+        for (int j = i; j < size - 1; j++) arr[j] = arr[j + 1];
+        size--;
     }
 
-    // Duyệt xuôi
-    void traverseForward() {
-        for (int x : arr) cout << x << " ";
-        cout << "\n";
+    void print_forward() { // O(n)
+        for (int i = 0; i < size; i++) cout << arr[i] << " ";
+        cout << endl;
     }
 
-    // Duyệt ngược
-    void traverseBackward() {
-        for (int i = arr.size() - 1; i >= 0; i--)
-            cout << arr[i] << " ";
-        cout << "\n";
+    void print_backward() { // O(n)
+        for (int i = size - 1; i >= 0; i--) cout << arr[i] << " ";
+        cout << endl;
     }
 };
 
 int main() {
     List lst;
-    lst.insertFirst(1);
-    lst.insertLast(2);
-    lst.insertAt(1, 99);
-    lst.traverseForward();
-    lst.deleteAt(1);
-    lst.traverseBackward();
-}
+    lst.init();
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_front(5);
+    lst.insert(1, 15);
 
+    cout << "Duyet xuoi: ";
+    lst.print_forward();
+
+    cout << "Duyet nguoc: ";
+    lst.print_backward();
+
+    lst.erase_front();
+    lst.erase_back();
+    lst.erase(0);
+
+    cout << "Sau khi xoa: ";
+    lst.print_forward();
+}
