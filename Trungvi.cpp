@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// ===== Các hàm sắp xếp =====
 void bubbleSort(int a[], int n) {
     for(int i = 0; i < n - 1; i++) {
         for(int j = 0; j < n - i - 1; j++) {
@@ -40,7 +39,6 @@ void printArray(int a[], int n) {
     cout << endl;
 }
 
-// ===== Hàm chính =====
 int main() {
     int n;
     cout << "Nhap so phan tu (n le): ";
@@ -55,7 +53,6 @@ int main() {
     cout << "Nhap " << n << " so nguyen:\n";
     for(int i = 0; i < n; i++) cin >> arr[i];
 
-    // Tạo 3 bản sao mảng ban đầu
     int b1[n], b2[n], b3[n];
     copy(arr, arr + n, b1);
     copy(arr, arr + n, b2);
@@ -81,3 +78,4 @@ int main() {
 
     return 0;
 }
+
